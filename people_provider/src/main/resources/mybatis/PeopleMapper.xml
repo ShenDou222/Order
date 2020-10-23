@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jk.mapper.PeopleMapper" >
+  <resultMap id="BaseResultMap" type="com.jk.entity.People" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="deptid" property="deptid" jdbcType="INTEGER" />
+    <result column="rudate" property="rudate" jdbcType="TIMESTAMP" />
+    <result column="gw" property="gw" jdbcType="VARCHAR" />
+    <result column="zz" property="zz" jdbcType="VARCHAR" />
+    <result column="deptname" property="deptname" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, deptid, rudate, gw, zz
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from people
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from people
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jk.entity.People" >
+    insert into people (id, name, deptid, 
+      rudate, gw, zz)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{deptid,jdbcType=INTEGER}, 
+      sysdate(), #{gw,jdbcType=VARCHAR}, #{zz,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jk.entity.People" >
+    insert into people
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="deptid != null" >
+        deptid,
+      </if>
+      <if test="rudate != null" >
+        rudate,
+      </if>
+      <if test="gw != null" >
+        gw,
+      </if>
+      <if test="zz != null" >
+        zz,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="deptid != null" >
+        #{deptid,jdbcType=INTEGER},
+      </if>
+      <if test="rudate != null" >
+        #{rudate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gw != null" >
+        #{gw,jdbcType=VARCHAR},
+      </if>
+      <if test="zz != null" >
+        #{zz,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jk.entity.People" >
+    update people
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="deptid != null" >
+        deptid = #{deptid,jdbcType=INTEGER},
+      </if>
+      <if test="rudate != null" >
+        rudate = #{rudate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gw != null" >
+        gw = #{gw,jdbcType=VARCHAR},
+      </if>
+      <if test="zz != null" >
+        zz = #{zz,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jk.entity.People" >
+    update people
+    set name = #{name,jdbcType=VARCHAR},
+      deptid = #{deptid,jdbcType=INTEGER},
+      rudate = sysdate(),
+      gw = #{gw,jdbcType=VARCHAR},
+      zz = #{zz,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="findAll" resultMap="BaseResultMap">
+    select * from people a
+	    left join people_dept b on a.deptid=b.id
+  </select>
+</mapper>

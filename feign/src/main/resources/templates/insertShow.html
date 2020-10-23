@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7/dist/css/bootstrap.css}">
+    <script th:src="@{/webjars/jquery/3.5.1/dist/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/3.3.7/dist/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" src="../vue/vue.min.js"></script>
+    <script type="text/javascript" src="../bootstrap/bootstrap-paginator.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>添加订单</h1>
+        <form class="form-horizontal" th:action="@{/saveOrder}" method="post">
+            <input type="hidden" th:value="${selectOrderById.orderId}" name="orderId"/>
+            <div class="form-group">
+                <label for="orderName" class="col-sm-2 control-label">订单名称wei</label>
+                <div class="col-sm-10">
+                    <input type="text" th:value="${selectOrderById.orderName}" class="form-control" name="orderName"  id="orderName" placeholder="orderName"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="createTime" class="col-sm-2 control-label">创建时间</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="createTime"  th:value="${selectOrderById.createTime}" id="createTime" placeholder="createTime"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="createTime" class="col-sm-2 control-label">订单价格</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="orderPrice"  th:value="${selectOrderById.orderPrice}" id="orderPrice" placeholder="createTime"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="deptid" class="col-sm-2 control-label">支付方式</label>
+                <div class="col-sm-10">&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input class="deptid" name="zf" style="display: none"/>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                <span class="buttonText" th:text="${selectOrderById.zf==null?'--请选择--':(selectOrderById.zf==1?'微信':(selectOrderById.zf==2?'支付包':'银行卡'))}">--请选择--</span>
+                                <span class="caret"></span>
+                            </button>
+                            <ul id="deptid" class="dropdown-menu" role="menu">
+                                <li><a href="#" onclick="shows($(this).text(),1)">微信</a></li>
+                                <li><a href="#" onclick="shows($(this).text(),2)">支付宝</a></li>
+                                <li><a href="#" onclick="shows($(this).text(),3)">银行卡</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <input type="submit" value="Submit" class="btn btn-info" />
+                    <a th:href="@{/findAll}" class="btn btn-info">Back</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+<script>
+    function shows(a,b) {
+        $('.buttonText').text(a);
+        alert(b);
+        $('.deptid').val(b)
+    }
+</script>
+</html>
