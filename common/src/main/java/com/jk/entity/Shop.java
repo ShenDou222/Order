@@ -6,4 +6,6 @@ public class Shop {
 
     private String sname;
 
+    private String sprice;
+
 }
